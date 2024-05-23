@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".activity.CartActivity">
 
     <LinearLayout
@@ -29,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/lato_bold"
-            android:text="Your Cart"
+            android:text="My Cart"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="22sp" />
@@ -37,6 +38,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cartRecycleView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

@@ -2,11 +2,14 @@ package com.example.ecommerceapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ecommerceapp.ProductInterface;
 import com.example.ecommerceapp.R;
+import com.example.ecommerceapp.adapter.ProductAdapter;
 import com.example.ecommerceapp.databinding.ActivityMainBinding;
 import com.example.ecommerceapp.model.ProductModel;
 
@@ -23,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     List<ProductModel> productModelList = new ArrayList<>();
     List<ProductModel> filterList = new ArrayList<>();
     List<CarouselItem> items =new ArrayList<>();
+    public static List<ProductModel> cartList = new ArrayList<>();
     String[] feature = {"• 48MP(OIS)+8MP+5MP Triple camera setup - 48MP (F1.8) Main Camera with OIS + 8MP (F2.2) Ultra wide camera + 5MP (F2.4) depth camera | 13MP (F2.2) front camera\n" +
             "• 16.65 centimeters (6.6-inch) FHD+ Super AMOLED display, FHD+ resolution with 1080 x 2340 pixels , 393 PPI with 16M colours\n" +
             "• Android 13, v13.0 operating system with MediaTek | MTK D1080 2.6GHz,2GHz Octa-Core processor\n" +
@@ -113,28 +117,28 @@ public class MainActivity extends AppCompatActivity {
         mainBinding.imageCarousel1.setAutoPlay(true);
         mainBinding.imageCarousel1.setAutoPlayDelay(3000);
 
-        productModelList.add(new ProductModel(R.drawable.samsung1,"Samsung Galaxy A54 5G (Awesome Violet, 8GB, 256GB Storage)","₹28,850",feature));
-        productModelList.add(new ProductModel(R.drawable.samsung2,"Samsung Galaxy M32 (Light Blue, 6GB RAM, 128GB Storage)","₹13,499",feature));
-        productModelList.add(new ProductModel(R.drawable.iphone1,"Apple Iphone 15 Plus (Blue, 128GB Storage)","₹80,590",feature));
-        productModelList.add(new ProductModel(R.drawable.iphone13,"Apple Iphone 13 (Green, 256GB Storage)","₹60,499",feature));
-        productModelList.add(new ProductModel(R.drawable.laptop_gaming,"ASUS TUF Gaming F15 Laptop (Black)","₹54,990",feature));
-        productModelList.add(new ProductModel(R.drawable.hp_laptop1,"HP Laptop 15s  (Jet Black)","₹21,863",feature));
-        productModelList.add(new ProductModel(R.drawable.lg_fridge,"LG 380L Double Door Refrigerator","₹42,599",feature));
-        productModelList.add(new ProductModel(R.drawable.whirlpool,"Whirlpool 411 Convertible Fridge","₹46,950",feature));
-        productModelList.add(new ProductModel(R.drawable.judge_mixer,"Judge Carnival Mixer Grinder","₹3,500",feature));
-        productModelList.add(new ProductModel(R.drawable.premier_mixer,"Premier Carina Mixer Grinder","₹3,199",feature));
-        productModelList.add(new ProductModel(R.drawable.table_fan1,"Havells V2 Pedestal Fan","₹5,950",feature));
-        productModelList.add(new ProductModel(R.drawable.table_fan3,"Bajaj Neo-Spectrum Table Fan","₹3,990",feature));
+        productModelList.add(new ProductModel(R.drawable.samsung1,"Samsung Galaxy A54 5G (Awesome Violet, 8GB, 256GB Storage)","₹28,850",feature[0]));
+        productModelList.add(new ProductModel(R.drawable.samsung2,"Samsung Galaxy M32 (Light Blue, 6GB RAM, 128GB Storage)","₹13,499",feature[1]));
+        productModelList.add(new ProductModel(R.drawable.iphone1,"Apple Iphone 15 Plus (Blue, 128GB Storage)","₹80,590",feature[2]));
+        productModelList.add(new ProductModel(R.drawable.iphone13,"Apple Iphone 13 (Green, 256GB Storage)","₹60,499",feature[3]));
+        productModelList.add(new ProductModel(R.drawable.laptop_gaming,"ASUS TUF Gaming F15 Laptop (Black)","₹54,990",feature[4]));
+        productModelList.add(new ProductModel(R.drawable.hp_laptop1,"HP Laptop 15s  (Jet Black)","₹21,863",feature[5]));
+        productModelList.add(new ProductModel(R.drawable.lg_fridge,"LG 380L Double Door Refrigerator","₹42,599",feature[6]));
+        productModelList.add(new ProductModel(R.drawable.whirlpool,"Whirlpool 411 Convertible Fridge","₹46,950",feature[7]));
+        productModelList.add(new ProductModel(R.drawable.judge_mixer,"Judge Carnival Mixer Grinder","₹3,500",feature[8]));
+        productModelList.add(new ProductModel(R.drawable.premier_mixer,"Premier Carina Mixer Grinder","₹3,199",feature[9]));
+        productModelList.add(new ProductModel(R.drawable.table_fan1,"Havells V2 Pedestal Fan","₹5,950",feature[10]));
+        productModelList.add(new ProductModel(R.drawable.table_fan3,"Bajaj Neo-Spectrum Table Fan","₹3,990",feature[11]));
 
         productInterface = new ProductInterface() {
             @Override
-            public void OnClick(int position) {
+            public void OnClick(ProductModel p1,int position) {
 
                 Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
-                intent.putExtra("image",productModelList.get(position).image);
-                intent.putExtra("pro_name",productModelList.get(position).pro_name);
-                intent.putExtra("pro_price",productModelList.get(position).price);
-                intent.putExtra("feature",productModelList.get(position).feature[position]);
+                intent.putExtra("image",p1.image);
+                intent.putExtra("pro_name",p1.pro_name);
+                intent.putExtra("pro_price",p1.price);
+                intent.putExtra("feature",p1.feature);
                 startActivity(intent);
             }
         };
@@ -155,6 +159,13 @@ public class MainActivity extends AppCompatActivity {
                 filterList = productModelList.stream().filter(a->a.pro_name.toLowerCase().contains(newText.toLowerCase())).collect(Collectors.toList());
                 adapter.searching(filterList);
                 return false;
+            }
+        });
+        mainBinding.cartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent cartIntent = new Intent(MainActivity.this, CartActivity.class);
+                startActivity(cartIntent);
             }
         });
 

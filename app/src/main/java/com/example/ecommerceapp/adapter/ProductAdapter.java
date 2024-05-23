@@ -1,4 +1,4 @@
-package com.example.ecommerceapp.activity;
+package com.example.ecommerceapp.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ecommerceapp.ProductInterface;
 import com.example.ecommerceapp.R;
 import com.example.ecommerceapp.databinding.ActivityMainBinding;
 import com.example.ecommerceapp.databinding.ProductShowSampleBinding;
@@ -20,7 +21,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     List<ProductModel> productModelList = new ArrayList<>();
     Context context;
-    com.example.ecommerceapp.activity.ProductInterface productInterface;
+    ProductInterface productInterface;
 
     public ProductAdapter(Context context,List<ProductModel> productModelList,ProductInterface productInterface) {
 
@@ -48,10 +49,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.binding.productImgSet.setImageResource(productModelList.get(position).image);
         holder.binding.productNameSet.setText(productModelList.get(position).pro_name);
         holder.binding.productPriceSet.setText(productModelList.get(position).price);
+
         holder.binding.sampleLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                productInterface.OnClick(position);
+                productInterface.OnClick(productModelList.get(position),position);
             }
         });
 
